@@ -22,5 +22,11 @@ namespace Clients.Views
         {
             InitializeComponent();
         }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(OrgList.SelectedItem!=null)
+            OrgList.ScrollIntoView(OrgList.SelectedItem);
+        }
     }
 }

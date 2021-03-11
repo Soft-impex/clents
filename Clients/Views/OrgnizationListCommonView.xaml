@@ -3,10 +3,143 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:Clients.ViewModels"
+             xmlns:converter="clr-namespace:Clients.Converters"
              xmlns:local="clr-namespace:Clients.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converter:OrderStateColorConverter x:Key="OrderStateConverter"/>
+        <converter:OrderStateColorSelectedConverter x:Key="OrderStateSelectedConverter"/>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <vm:OrganiztionCommonViewModel/>
+    </UserControl.DataContext>
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition  Height="400"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition MinHeight="200"/>
+        </Grid.RowDefinitions>
+        <TextBox Text="{Binding Find, UpdateSourceTrigger=PropertyChanged}"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <DataGrid x:Name="OrgList" ItemsSource="{Binding OrganiztionCommons}" SelectedIndex="{Binding OrgSelectedIndex}" SelectedItem="{Binding OrgSelected}" ScrollViewer.CanContentScroll="True" 
+                  RowDetailsVisibilityMode="Visible"
+      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  IsSynchronizedWithCurrentItem="True"
+      ScrollViewer.HorizontalScrollBarVisibility="Auto" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ScrollViewer.IsDeferredScrollingEnabled="True"  AutoGenerateColumns="False" SelectionChanged="DataGrid_SelectionChanged">
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Background" Value="{Binding OrdersState, Converter={StaticResource OrderStateConverter}}"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver"
+                           Value="True">
+                                <Setter Property="Background"
+                               Value="{Binding OrdersState, Converter={StaticResource OrderStateSelectedConverter}}" />
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background"
+                               Value="{Binding OrdersState, Converter={StaticResource OrderStateSelectedConverter}}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Организация" Binding="{Binding Name}" MaxWidth="300"/>
+                    <DataGridTextColumn Header="ИНН" Binding="{Binding Inn}"/>
+                    <DataGridTextColumn Header="Договор ЭД" Binding="{Binding ContractED}" >
+                        <!--
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0} - {1:dd.MM.yy}">
+                            <Binding Path="ConstractEd"/>
+                            <Binding Path="DateEd"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                    -->
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Договор ЛД" Binding="{Binding ContractLd}">
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Тариф" Binding="{Binding BankBik}"/>
+                    <DataGridTextColumn Header="Владелец лицензии" Binding="{Binding LicenseeOrgAlias}"/>
+                    <DataGridTemplateColumn Header="Деятельность">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ListBox ItemsSource="{Binding Activities}" BorderBrush="Transparent" Background="Transparent">
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+                                </ListBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="SSL" Binding="{Binding SSLCount}"/>
+                    <DataGridTextColumn Header="SSL свободно" Binding="{Binding SSLCountFree}"/>
+                    <DataGridTextColumn Header="ЭЦП" Binding="{Binding ECPCount}"/>
+                    <DataGridTextColumn Header="ККТ" Binding="{Binding KKTCount}"/>
+                    <DataGridTextColumn Header="Задолжность"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
+            <StackPanel Grid.Column="2" Width="300" Orientation="Vertical">
+                <StackPanel.Resources>
+                    <Style TargetType="TextBox">
+                        <Setter Property="IsReadOnly" Value="True"/>
+                    </Style>
+                </StackPanel.Resources>
+                <Label Content="Организация"/>
+                <TextBox>
+                    <TextBox.Text>
+                        <MultiBinding StringFormat="{}{0} - {1}">
+                            <Binding Path="OrgSelected.LegalForm"/>
+                            <Binding Path="OrgSelected.Name"/>
+                        </MultiBinding>
+                    </TextBox.Text>
+                </TextBox>
+
+            </StackPanel>
+        </Grid>
+        <!--
+        <ListView Style="{DynamicResource ListViewStyle1}" ItemsSource="{Binding OrganizationCommonModels}" Grid.Row="1">
+            <ListView.Resources>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Background" Value="{Binding OrdersState, Converter={StaticResource OrderStateSelectedConverter}}"/>
+                </Style>
+            </ListView.Resources>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding OrgName}"/>
+                        <TextBlock Text="{Binding Inn}"/>
+                        <TextBlock >
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} - {1:dd.MM.yy}">
+                                    <Binding Path="DogovorED"/>
+                                    <Binding Path="DogovorEDDate"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        -->
+        <GridSplitter Grid.Row="2" Height="3" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+        <TabControl Grid.Row="3">
+            <TabItem Header="Заявки"></TabItem>
+            <TabItem Header="ЭЦП"></TabItem>
+            <TabItem Header="SSL"></TabItem>
+            <TabItem Header="ККТ"></TabItem>
+            <TabItem Header="Личные кабинеты"></TabItem>
+        </TabControl>
     </Grid>
 </UserControl>
