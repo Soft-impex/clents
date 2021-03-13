@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using System.ComponentModel;
 
 #nullable disable
 
@@ -193,9 +194,47 @@ namespace Clients.DataContext
                 entity.Property(e => e.Sqlguid).HasColumnName("SQLGuid");
             });
 
+            modelBuilder.HasSequence<int>("ContractEDInfodec").StartsAt(589).IncrementsBy(1);
+
             OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        public enum NextContractType
+        {
+            [Description("ContractEDInfodec_seq")]EDInfodec, [Description("ContractEDNts_seq")]EDNts, [Description("ContractLD_seq")]LDCtm
+        }
+        public string GetNextContracts(NextContractType type)
+        {
+            using (var cmd = Database.GetDbConnection().CreateCommand())
+                try
+                {
+                    cmd.Connection.Open();
+                    switch (type)
+                    {
+                        case NextContractType.EDInfodec:
+                            cmd.CommandText = $"SELECT NEXTVAL('ContractEDInfodec_seq')";
+                            return "ЭД" + Convert.ToInt32(cmd.ExecuteScalar()) + "/" + DateTime.Now.ToString("yyMM");
+                            break;
+                        case NextContractType.EDNts:
+                            cmd.CommandText = $"SELECT NEXTVAL('ContractEDInfodec_seq')";
+                            return "ЭДН" + Convert.ToInt32(cmd.ExecuteScalar()) + "/" + DateTime.Now.ToString("yyMM");
+                            break;
+                        case NextContractType.LDCtm:
+                            cmd.CommandText = $"SELECT NEXTVAL('ContractLD_seq')";
+                            return "ЛД" + Convert.ToInt32(cmd.ExecuteScalar()) + "/" + DateTime.Now.ToString("yyMM");
+                            break;
+                        default:
+                            return null;
+                            break;
+                    }
+                }
+                catch(SystemException ex)
+                {
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return null;
+                }
+        }
     }
 }

@@ -7,11 +7,15 @@ using System.Linq;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Clients.DataContext;
+using Prism.Commands;
+using Clients.DataContext;
 
 namespace Clients.ViewModels
 {
     class OrganiztionCommonViewModel : INotifyPropertyChanged
     {
+        public DelegateCommand OrgEditCommand { get; private set; }
+        
         private ClientsContext clientsContext;
         string find;
         public string Find {
@@ -82,6 +86,13 @@ namespace Clients.ViewModels
         public OrganiztionCommonViewModel()
         {
             clientsContext = new ClientsContext();
+            OrgEditCommand = new DelegateCommand(() =>
+              {
+                  Views.OrganizationEditView fr = new Views.OrganizationEditView();
+                  //fr.DataContext = new OrgnizationEditViewModel((int)OrgSelected.Id);
+                  (fr.DataContext as OrgnizationEditViewModel).Select((int)OrgSelected.Id);
+                  fr.Show();
+              });
         }
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")

@@ -43,3 +43,5 @@ C:\Users\Xasya\source\repos\Clients\Clients\bin\Debug\netcoreapp3.1\System.Compo
 C:\Users\Xasya\source\repos\Clients\Clients\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
 C:\Users\Xasya\source\repos\Clients\Clients\bin\Debug\netcoreapp3.1\Npgsql.dll
 C:\Users\Xasya\source\repos\Clients\Clients\bin\Debug\netcoreapp3.1\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\Users\Xasya\source\repos\Clients\Clients\obj\Debug\netcoreapp3.1\Views\OrganizationEditView.g.cs
+C:\Users\Xasya\source\repos\Clients\Clients\obj\Debug\netcoreapp3.1\Views\OrganizationEditView.baml

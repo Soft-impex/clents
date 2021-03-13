@@ -18,6 +18,7 @@ namespace Clients.Models
         public OrganizationCommonModel() { }
         public OrganizationCommonModel(ViewOrgsummary viewOrgsummary)
         {
+            Id = viewOrgsummary.Id;
             Name = viewOrgsummary.Name;
             NameFull = viewOrgsummary.NameFull;
             LegalForm = viewOrgsummary.LegalForm;

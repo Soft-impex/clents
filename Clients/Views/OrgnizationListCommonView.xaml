@@ -11,6 +11,7 @@
     <UserControl.Resources>
         <converter:OrderStateColorConverter x:Key="OrderStateConverter"/>
         <converter:OrderStateColorSelectedConverter x:Key="OrderStateSelectedConverter"/>
+        <converter:LegalFormConverter x:Key="LegalFormConverter"/>
     </UserControl.Resources>
     <UserControl.DataContext>
         <vm:OrganiztionCommonViewModel/>
@@ -29,11 +30,14 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <DataGrid x:Name="OrgList" ItemsSource="{Binding OrganiztionCommons}" SelectedIndex="{Binding OrgSelectedIndex}" SelectedItem="{Binding OrgSelected}" ScrollViewer.CanContentScroll="True" 
+            <DataGrid x:Name="OrgList" IsReadOnly="True" ItemsSource="{Binding OrganiztionCommons}" SelectedIndex="{Binding OrgSelectedIndex}" SelectedItem="{Binding OrgSelected}" ScrollViewer.CanContentScroll="True" 
                   RowDetailsVisibilityMode="Visible"
       ScrollViewer.VerticalScrollBarVisibility="Auto"
                   IsSynchronizedWithCurrentItem="True"
       ScrollViewer.HorizontalScrollBarVisibility="Auto" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ScrollViewer.IsDeferredScrollingEnabled="True"  AutoGenerateColumns="False" SelectionChanged="DataGrid_SelectionChanged">
+                <DataGrid.InputBindings>
+                    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding OrgEditCommand}"/>
+                </DataGrid.InputBindings>
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
                         <Setter Property="Background" Value="{Binding OrdersState, Converter={StaticResource OrderStateConverter}}"/>
@@ -96,14 +100,10 @@
                     </Style>
                 </StackPanel.Resources>
                 <Label Content="Организация"/>
-                <TextBox>
-                    <TextBox.Text>
-                        <MultiBinding StringFormat="{}{0} - {1}">
-                            <Binding Path="OrgSelected.LegalForm"/>
-                            <Binding Path="OrgSelected.Name"/>
-                        </MultiBinding>
-                    </TextBox.Text>
-                </TextBox>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Text="{Binding OrgSelected.LegalForm, Converter={StaticResource LegalFormConverter}}"/>
+                    <TextBox Text="{Binding OrgSelected.Name}"/>
+                </StackPanel>
 
             </StackPanel>
         </Grid>
