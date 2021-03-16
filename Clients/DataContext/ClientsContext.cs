@@ -2,7 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System.ComponentModel;
-
+using Microsoft.Extensions.Logging.Console;
+using Microsoft.Extensions.Logging;
 #nullable disable
 
 namespace Clients.DataContext
@@ -26,8 +27,10 @@ namespace Clients.DataContext
         public virtual DbSet<ViewOrglist> ViewOrglists { get; set; }
         public virtual DbSet<ViewOrgsummary> ViewOrgsummaries { get; set; }
 
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
@@ -118,7 +121,7 @@ namespace Clients.DataContext
                 entity.Property(e => e.Sqlguid).HasColumnName("SQLGuid");
 
                 entity.Property(e => e.LicenseeLdidOrg).HasColumnName("LicenseeLDIdOrg");
-
+                
                 entity.HasOne(d => d.LicenseeLdidOrgNavigation)
                     .WithMany(p => p.InverseLicenseeLdidOrgNavigation)
                     .HasForeignKey(d => d.LicenseeLdidOrg)

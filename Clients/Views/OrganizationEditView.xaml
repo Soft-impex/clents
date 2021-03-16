@@ -10,7 +10,7 @@
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         mc:Ignorable="d"
         FontSize="12"
-        Title="OrganizationEditView" Height="450" Width="450">
+        Title="OrganizationEditView" Height="800" Width="611">
     <Window.DataContext>
         <vm:OrgnizationEditViewModel/>
     </Window.DataContext>
@@ -18,151 +18,181 @@
         <conv:EnumDescriptionConverter x:Key="EnumConverter"/>
         <conv:LegalFormConverter x:Key="LegalFormConverter"/>
     </Window.Resources>
-    <TabControl>
-        <TabItem Header="Реквизиты">
-            <Canvas>
-                <Label Content="Псведоним" Canvas.Left="10" Canvas.Top="10"/>
-                <TextBox Text="{Binding Organization_.Alias}" Canvas.Left="88" Canvas.Top="14" Width="322"/>
-                <ComboBox ItemsSource="{Binding Source={conv:EnumToItemsSource {x:Type main:LegalFromEnum}}}" SelectedItem="{Binding Organization_.LegalForm,Converter={StaticResource LegalFormConverter}}" Grid.Row="1" Grid.Column="1" Canvas.Left="108" Canvas.Top="43" Width="78"/>
-                <Label Content="Наименование" Grid.Row="2" Canvas.Left="10" Canvas.Top="41"/>
-                <TextBox Grid.Row="2" Grid.Column="1" Canvas.Left="191" Canvas.Top="45" Width="219"/>
-                <GroupBox Header="Договор ЭД" Canvas.Left="10" Canvas.Top="72" Width="198" Height="148">
-                    <Canvas>
-                        <Label Content="Агент" Canvas.Left="10" Canvas.Top="10"/>
-                        <ComboBox ItemsSource="{Binding ContractEdAgents}" SelectedItem="{Binding ContractsEd_.Agent}" Canvas.Left="62" Canvas.Top="12" Width="114">
-                            <ComboBox.Style>
-                                <Style TargetType="ComboBox">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ContractsEd_}" Value="{x:Null}">
-                                            <Setter Property="IsEnabled" Value="False"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </ComboBox.Style>
-                        </ComboBox>
-                        <Label Content="Оператор" Canvas.Left="10" Canvas.Top="41"/>
-                        <ComboBox ItemsSource="{Binding Operators}" SelectedItem="{Binding ContractsEd_.Operator}" Canvas.Left="62" Canvas.Top="43" Width="114">
-                            <ComboBox.Style>
-                                <Style TargetType="ComboBox">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ContractsEd_}" Value="{x:Null}">
-                                            <Setter Property="IsEnabled" Value="False"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </ComboBox.Style>
-                        </ComboBox>
-                        <Label Content="Номер" Canvas.Left="10" Canvas.Top="68"/>
-                        <TextBox Text="{Binding ContractsEd_.Num}" Canvas.Left="62" Canvas.Top="72" Width="92">
-                            <TextBox.Style>
-                                <Style TargetType="TextBox">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ContractsEd_}" Value="{x:Null}">
-                                            <Setter Property="IsReadOnly" Value="True"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBox.Style>
-                        </TextBox>
-                        <Label Content="Дата" Canvas.Left="10" Canvas.Top="94"/>
-                        <DatePicker SelectedDate="{Binding ContractsEd_.Date}" Canvas.Left="62" Canvas.Top="95" Width="114">
-                            <DatePicker.Style>
-                                <Style TargetType="DatePicker">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ContractsEd_}" Value="{x:Null}">
-                                            <Setter Property="IsEnabled" Value="False"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </DatePicker.Style>
-                        </DatePicker>
-                        <Button Command="{Binding CreateContractED}" Width="20" Height="18" Canvas.Top="72" Canvas.Left="159">
-                            <Button.Style>
-                                <Style TargetType="{x:Type Button}">
-                                    <Style.Setters>
-                                        <Setter Property="Content">
-                                            <Setter.Value>
-                                                <fa:IconBlock Icon="FolderOpen"/>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style.Setters>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ContractsEd_}" Value="{x:Null}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <TabControl>
+            <TabItem Header="Реквизиты">
+                <Canvas>
+                    <Label Content="Псведоним" Canvas.Left="10" Canvas.Top="10"/>
+                    <TextBox Text="{Binding Organization_.Alias}" Canvas.Left="88" Canvas.Top="14" Width="322"/>
+                    <ComboBox ItemsSource="{Binding Source={conv:EnumToItemsSource {x:Type main:LegalFromEnum}}}" SelectedItem="{Binding Organization_.LegalForm,Converter={StaticResource LegalFormConverter}}" Grid.Row="1" Grid.Column="1" Canvas.Left="108" Canvas.Top="43" Width="78"/>
+                    <Label Content="Наименование" Grid.Row="2" Canvas.Left="10" Canvas.Top="41"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Canvas.Left="191" Canvas.Top="45" Width="219"/>
+                    <CheckBox IsChecked="{Binding Organization_.StatusWork}" Content="Работает" Canvas.Left="421" Canvas.Top="14"/>
+                    <GroupBox Header="Документооборот" Canvas.Left="463" Canvas.Top="34">
+                        <StackPanel>
+                            <CheckBox Content="Диадок" IsChecked="{Binding Organization_.EDODiadok}"/>
+                            <CheckBox Content="Диадок 820" IsChecked="{Binding Organization_.EDODiadok820}"/>
+                            <CheckBox Content="Сбис" IsChecked="{Binding Organization_.EDOSbis}"/>
+                            <CheckBox Content="Такском" IsChecked="{Binding Organization_.EDOTaxcom}"/>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Header="Договор ЭД" Canvas.Left="10" Canvas.Top="72" Width="198" Height="148">
+                        <Canvas>
+                            <Label Content="Агент" Canvas.Left="10" Canvas.Top="10"/>
+                            <ComboBox ItemsSource="{Binding ContractEdAgents}" SelectedItem="{Binding ContractsEd_.Agent}" Canvas.Left="62" Canvas.Top="12" Width="114">
+                                <ComboBox.Style>
+                                    <Style TargetType="ComboBox">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ContractsEd_}" Value="{x:Null}">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ComboBox.Style>
+                            </ComboBox>
+                            <Label Content="Оператор" Canvas.Left="10" Canvas.Top="41"/>
+                            <ComboBox ItemsSource="{Binding Operators}" SelectedItem="{Binding ContractsEd_.Operator}" Canvas.Left="62" Canvas.Top="43" Width="114">
+                                <ComboBox.Style>
+                                    <Style TargetType="ComboBox">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ContractsEd_}" Value="{x:Null}">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ComboBox.Style>
+                            </ComboBox>
+                            <Label Content="Номер" Canvas.Left="10" Canvas.Top="68"/>
+                            <TextBox Text="{Binding ContractsEd_.Num}" Canvas.Left="62" Canvas.Top="72" Width="92">
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ContractsEd_}" Value="{x:Null}">
+                                                <Setter Property="IsReadOnly" Value="True"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                            <Label Content="Дата" Canvas.Left="10" Canvas.Top="94"/>
+                            <DatePicker SelectedDate="{Binding ContractsEd_.Date}" Canvas.Left="62" Canvas.Top="95" Width="114">
+                                <DatePicker.Style>
+                                    <Style TargetType="DatePicker">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ContractsEd_}" Value="{x:Null}">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DatePicker.Style>
+                            </DatePicker>
+                            <Button Command="{Binding CreateContractED}" Width="20" Height="18" Canvas.Top="72" Canvas.Left="159">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}">
+                                        <Style.Setters>
                                             <Setter Property="Content">
                                                 <Setter.Value>
-                                                    <fa:IconBlock Icon="Plus"/>
+                                                    <fa:IconBlock Icon="FolderOpen"/>
                                                 </Setter.Value>
                                             </Setter>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-                    </Canvas>
-                </GroupBox>
-                <GroupBox Header="Договор ЛД" Canvas.Left="222" Canvas.Top="72" Width="198" Height="122">
-                    <Canvas>
-                        <Label Content="Агент" Canvas.Left="10" Canvas.Top="10"/>
-                        <ComboBox ItemsSource="{Binding ContractEdAgents}" SelectedItem="{Binding ContractsLd_.Agent}" Canvas.Left="62" Canvas.Top="12" Width="114">
-                            <ComboBox.Style>
-                                <Style TargetType="ComboBox">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ContractsLd_}" Value="{x:Null}">
-                                            <Setter Property="IsEnabled" Value="False"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </ComboBox.Style>
-                        </ComboBox>
-                        <Label Content="Номер" Canvas.Left="10" Canvas.Top="39"/>
-                        <TextBox Text="{Binding ContractsLd_.Num}" Canvas.Left="62" Canvas.Top="43" Width="92">
-                            <TextBox.Style>
-                                <Style TargetType="TextBox">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ContractsLd_}" Value="{x:Null}">
-                                            <Setter Property="IsReadOnly" Value="True"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBox.Style>
-                        </TextBox>
-                        <Label Content="Дата" Canvas.Left="10" Canvas.Top="65"/>
-                        <DatePicker SelectedDate="{Binding ContractsLd_.Date}" Canvas.Left="62" Canvas.Top="66" Width="114">
-                            <DatePicker.Style>
-                                <Style TargetType="DatePicker">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ContractsLd_}" Value="{x:Null}">
-                                            <Setter Property="IsEnabled" Value="False"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </DatePicker.Style>
-                        </DatePicker>
-                        <Button Command="{Binding CreateContractLD}" Width="20" Height="18" Canvas.Top="43" Canvas.Left="159">
-                            <Button.Style>
-                                <Style TargetType="{x:Type Button}">
-                                    <Style.Setters>
-                                        <Setter Property="Content">
-                                            <Setter.Value>
-                                                <fa:IconBlock Icon="FolderOpen"/>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style.Setters>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ContractsLd_}" Value="{x:Null}">
+                                        </Style.Setters>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ContractsEd_}" Value="{x:Null}">
+                                                <Setter Property="Content">
+                                                    <Setter.Value>
+                                                        <fa:IconBlock Icon="Plus"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </Canvas>
+                    </GroupBox>
+                    <GroupBox Header="Договор ЛД" Canvas.Left="222" Canvas.Top="72" Width="198" Height="148">
+                        <Canvas>
+                            <Label Content="Агент" Canvas.Left="10" Canvas.Top="10"/>
+                            <ComboBox ItemsSource="{Binding ContractEdAgents}" SelectedItem="{Binding ContractsLd_.Agent}" Canvas.Left="62" Canvas.Top="12" Width="114">
+                                <ComboBox.Style>
+                                    <Style TargetType="ComboBox">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ContractsLd_}" Value="{x:Null}">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ComboBox.Style>
+                            </ComboBox>
+                            <Label Content="Номер" Canvas.Left="10" Canvas.Top="39"/>
+                            <TextBox Text="{Binding ContractsLd_.Num}" Canvas.Left="62" Canvas.Top="43" Width="92">
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ContractsLd_}" Value="{x:Null}">
+                                                <Setter Property="IsReadOnly" Value="True"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                            <Label Content="Дата" Canvas.Left="10" Canvas.Top="65"/>
+                            <DatePicker SelectedDate="{Binding ContractsLd_.Date}" Canvas.Left="62" Canvas.Top="66" Width="114">
+                                <DatePicker.Style>
+                                    <Style TargetType="DatePicker">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ContractsLd_}" Value="{x:Null}">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DatePicker.Style>
+                            </DatePicker>
+                            <Button Command="{Binding CreateContractLD}" Width="20" Height="18" Canvas.Top="43" Canvas.Left="159">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}">
+                                        <Style.Setters>
                                             <Setter Property="Content">
                                                 <Setter.Value>
-                                                    <fa:IconBlock Icon="Plus"/>
+                                                    <fa:IconBlock Icon="FolderOpen"/>
                                                 </Setter.Value>
                                             </Setter>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-                    </Canvas>
-                </GroupBox>
-            </Canvas>
-        </TabItem>
-    </TabControl>
+                                        </Style.Setters>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ContractsLd_}" Value="{x:Null}">
+                                                <Setter Property="Content">
+                                                    <Setter.Value>
+                                                        <fa:IconBlock Icon="Plus"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </Canvas>
+                    </GroupBox>
+                    <Label Content="Субдилер" Canvas.Left="10" Canvas.Top="225"/>
+                    <ComboBox ItemsSource="{Binding SubDillers}" SelectedItem="{Binding Organization_.SubDiller}" Canvas.Left="81" Canvas.Top="227" Width="168"/>
+                    <Label Content="Владелец лицензии" Canvas.Left="262" Canvas.Top="225"/>
+                    <TextBox Text="{Binding Organization_.LicenseeLdidOrgNavigation.Alias, Mode=OneWay}" Width="150" Canvas.Left="385" Canvas.Top="229"/>
+                    <Button Command="{Binding LicenseeLDChangeCommand}" Canvas.Left="540" Canvas.Top="230">
+                        <Button.Content>
+                            <fa:IconBlock Icon="AddressBook"/>
+                        </Button.Content>
+                    </Button>
+                    <Button Command="{Binding LicenseeLDEqualCommand}" Canvas.Left="560" Canvas.Top="230">
+                        <Button.Content>
+                            <fa:IconBlock Icon="Equals" VerticalAlignment="Top"/>
+                        </Button.Content>
+                    </Button>
+                </Canvas>
+            </TabItem>
+        </TabControl>
+        <Button Command="{Binding SaveCommand}" Content="Сохранить"  Grid.Row="1"/>
+    </Grid>
 </Window>

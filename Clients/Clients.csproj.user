@@ -10,6 +10,9 @@
     <Compile Update="Views\OrganizationEditView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\OrganizationLicenseeLDView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\OrgnizationListCommonView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -19,6 +22,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\OrganizationEditView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\OrganizationLicenseeLDView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\OrgnizationListCommonView.xaml">

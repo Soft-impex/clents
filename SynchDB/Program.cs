@@ -13,9 +13,14 @@ namespace SynchDB
             clients_siContext dbMSql = new clients_siContext();
             ClientsContext dbPgSql = new ClientsContext();
 
-            var viewOrganizations = dbPgSql.ViewOrglists.ToList();
-            foreach (var o in viewOrganizations)
-                Console.WriteLine(o.DateEd);
+            var organisations = dbPgSql.Organizations.ToList();
+            var org2 = dbPgSql.Organizations.Find(25734);
+            Console.WriteLine($"{org2.Alias} - {org2.Organization_?.Alias}");
+            /*
+            foreach (var o in organisations)
+                if(o.Alias!=o.Organization_?.Alias)
+                Console.WriteLine($"{o.Alias} \t-\t {o.Organization_?.Alias}");
+            */
             ICollection<ConvertCommands> commands = new List<ConvertCommands>()
             {
                 /*

@@ -7,6 +7,8 @@ using System.Windows;
 using Prism.Commands;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Clients.Views;
+using System.Windows.Controls;
 
 namespace Clients.ViewModels
 {
@@ -18,11 +20,17 @@ namespace Clients.ViewModels
         public ContractsLd ContractsLd_ { get; set; }
         public List<string> ContractEdAgents { get; set; } = new List<string>() { "Софт-Импэкс", "ИП" };
         public List<string> Operators { get; set; } = new List<string>() { "Инфодек", "НТС" };
+        public List<string> SubDillers { get; set; } = new List<string>() { "Курск", "Сабынин" };
 
         public DelegateCommand CreateContractED { get; private set; }
         public DelegateCommand CreateContractLD { get; private set; }
+        public DelegateCommand LicenseeLDChangeCommand { get; private set; }
+        public DelegateCommand LicenseeLDEqualCommand { get; private set; }
+        public DelegateCommand SaveCommand { get; private set; }
         public OrgnizationEditViewModel()
         {
+            db = new ClientsContext();
+            
             CreateContractED = new DelegateCommand(() =>
             {
                 if (ContractsEd_ == null)
@@ -58,12 +66,36 @@ namespace Clients.ViewModels
                     OnPropertyChanged("ContractsLd_");
                 };
             });
+            LicenseeLDChangeCommand = new DelegateCommand( ()=>
+              {
+                  OrganizationLicenseeLDView fr = new OrganizationLicenseeLDView();
+                  fr.Left = System.Windows.Forms.Cursor.Position.X;
+                  fr.Top = System.Windows.Forms.Cursor.Position.Y;
+                  if (fr.ShowDialog() == true)
+                  {
+                      var vm = fr.DataContext as OrganizationLicenseeLDViewModel;
+                      Organization_.LicenseeLdidOrg = vm.OrganizationSelected.Id;
+                      Organization_.LicenseeLdidOrgNavigation = vm.OrganizationSelected;
+                      OnPropertyChanged(nameof(Organization_));
+                  }
+              });
+            LicenseeLDEqualCommand = new DelegateCommand(() =>
+              {
+                  Organization_.LicenseeLdidOrg = Organization_.Id;
+                  Organization_.LicenseeLdidOrgNavigation = Organization_;
+                  OnPropertyChanged(nameof(Organization_));
+              });
+            SaveCommand = new DelegateCommand(() =>
+              {
+                  db.SaveChanges();
+              });
         }
 
         public void Select(int idOrg)
         {
-            db = new ClientsContext();
-            Organization_ = db.Organizations.Find(idOrg);
+            foreach (var o in db.Organizations)
+                if (o.Id == idOrg)
+                    Organization_ = o;
             OnPropertyChanged(nameof(Organization_));
             ContractsEd_ = (from c in db.ContractsEds
                             where c.IdOrg == idOrg

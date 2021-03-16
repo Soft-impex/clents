@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -30,8 +31,14 @@ namespace Clients.DataContext
         public string BankCorrsepondentAccount { get; set; }
         public string DirectorName { get; set; }
         public string DirectorDolgnost { get; set; }
+        public Boolean EDOSbis { get; set; }
+        public Boolean EDOTaxcom { get; set; }
+        public Boolean EDODiadok { get; set; }
+        public Boolean EDODiadok820 { get; set; }
         public string Sqlguid { get; set; }
         public int? LicenseeLdidOrg { get; set; }
+        public string SubDiller { get; set; }
+        public Boolean StatusWork { get; set; }
 
         public virtual Organization LicenseeLdidOrgNavigation { get; set; }
         public virtual ICollection<Contact> Contacts { get; set; }

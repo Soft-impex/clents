@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.ComponentModel.DataAnnotations.Schema;
 #nullable disable
 
 namespace SynchDB.PgSQL
@@ -31,6 +31,8 @@ namespace SynchDB.PgSQL
         public string DirectorDolgnost { get; set; }
         public string Sqlguid { get; set; }
         public int? LicenseeLDIdOrg { get; set; }
+        [ForeignKey("LicenseeLDIdOrg")]
+        public Organization Organization_ { get; set; }
 
         public virtual ICollection<Contact> Contacts { get; set; }
         public virtual ICollection<ContractsEd> ContractsEds { get; set; }

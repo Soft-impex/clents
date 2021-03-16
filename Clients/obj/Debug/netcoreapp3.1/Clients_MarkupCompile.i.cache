@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1;
 C:\Users\Xasya\source\repos\Clients\Clients\App.xaml
-31367059228
+4-158497411
 
-36-650827135
-215-1820478663
-MainWindow.xaml;Views\OrganizationEditView.xaml;Views\OrgnizationListCommonView.xaml;
+38-450726292
+221-1469018676
+MainWindow.xaml;Views\OrganizationEditView.xaml;Views\OrganizationLicenseeLDView.xaml;Views\OrgnizationListCommonView.xaml;
 
 True
 
