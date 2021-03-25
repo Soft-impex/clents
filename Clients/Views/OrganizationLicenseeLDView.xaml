@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Clients.Views"
         xmlns:vm="clr-namespace:Clients.ViewModels"
         mc:Ignorable="d"
+        FontSize="{StaticResource GlobalFontSize}"
         Title="OrganizationLicenseeLDView" Height="450" Width="300" WindowStyle="ToolWindow">
     <Window.DataContext>
         <vm:OrganizationLicenseeLDViewModel/>

@@ -9,7 +9,7 @@
         xmlns:vm="clr-namespace:Clients.ViewModels"
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         mc:Ignorable="d"
-        FontSize="12"
+        FontSize="{StaticResource GlobalFontSize}"
         Title="OrganizationEditView" Height="800" Width="611">
     <Window.DataContext>
         <vm:OrgnizationEditViewModel/>
@@ -69,7 +69,7 @@
                             <Label Content="Номер" Canvas.Left="10" Canvas.Top="68"/>
                             <TextBox Text="{Binding ContractsEd_.Num}" Canvas.Left="62" Canvas.Top="72" Width="92">
                                 <TextBox.Style>
-                                    <Style TargetType="TextBox">
+                                    <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxDefaultStyle}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ContractsEd_}" Value="{x:Null}">
                                                 <Setter Property="IsReadOnly" Value="True"/>
@@ -131,7 +131,7 @@
                             <Label Content="Номер" Canvas.Left="10" Canvas.Top="39"/>
                             <TextBox Text="{Binding ContractsLd_.Num}" Canvas.Left="62" Canvas.Top="43" Width="92">
                                 <TextBox.Style>
-                                    <Style TargetType="TextBox">
+                                    <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxDefaultStyle}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ContractsLd_}" Value="{x:Null}">
                                                 <Setter Property="IsReadOnly" Value="True"/>
@@ -152,9 +152,9 @@
                                     </Style>
                                 </DatePicker.Style>
                             </DatePicker>
-                            <Button Command="{Binding CreateContractLD}" Width="20" Height="18" Canvas.Top="43" Canvas.Left="159">
+                            <Button Command="{Binding CreateContractLD}" Width="20" Height="18" Canvas.Top="44" Canvas.Left="159" RenderTransformOrigin="0.275,1.034">
                                 <Button.Style>
-                                    <Style TargetType="{x:Type Button}">
+                                    <Style BasedOn="{StaticResource ButtonDefaultStyle}" TargetType="{x:Type Button}">
                                         <Style.Setters>
                                             <Setter Property="Content">
                                                 <Setter.Value>
