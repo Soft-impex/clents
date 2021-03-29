@@ -28,9 +28,9 @@
                 <Canvas>
                     <Label Content="Псведоним" Canvas.Left="10" Canvas.Top="10"/>
                     <TextBox Text="{Binding Organization_.Alias}" Canvas.Left="88" Canvas.Top="14" Width="322"/>
-                    <ComboBox ItemsSource="{Binding Source={conv:EnumToItemsSource {x:Type main:LegalFromEnum}}}" SelectedItem="{Binding Organization_.LegalForm,Converter={StaticResource LegalFormConverter}}" Grid.Row="1" Grid.Column="1" Canvas.Left="108" Canvas.Top="43" Width="78"/>
+                    <ComboBox ItemsSource="{Binding Source={conv:EnumToItemsSource {x:Type main:LegalFromEnum}}}" SelectedItem="{Binding Organization_.LegalForm,Converter={StaticResource LegalFormConverter}}" Style="{StaticResource ComboBoxFlatStyle}" Grid.Row="1" Grid.Column="1" Canvas.Left="108" Canvas.Top="43" Width="78"/>
                     <Label Content="Наименование" Grid.Row="2" Canvas.Left="10" Canvas.Top="41"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" Canvas.Left="191" Canvas.Top="45" Width="219"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Canvas.Left="191" Canvas.Top="42" Width="219"/>
                     <CheckBox IsChecked="{Binding Organization_.StatusWork}" Content="Работает" Canvas.Left="421" Canvas.Top="14"/>
                     <GroupBox Header="Документооборот" Canvas.Left="463" Canvas.Top="34">
                         <StackPanel>
@@ -43,9 +43,9 @@
                     <GroupBox Header="Договор ЭД" Canvas.Left="10" Canvas.Top="72" Width="198" Height="148">
                         <Canvas>
                             <Label Content="Агент" Canvas.Left="10" Canvas.Top="10"/>
-                            <ComboBox ItemsSource="{Binding ContractEdAgents}" SelectedItem="{Binding ContractsEd_.Agent}" Canvas.Left="62" Canvas.Top="12" Width="114">
+                            <ComboBox ItemsSource="{Binding ContractEdAgents}" SelectedItem="{Binding ContractsEd_.Agent}"  Canvas.Left="62" Canvas.Top="12" Width="114">
                                 <ComboBox.Style>
-                                    <Style TargetType="ComboBox">
+                                    <Style TargetType="ComboBox" BasedOn="{StaticResource ComboBoxFlatStyle}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ContractsEd_}" Value="{x:Null}">
                                                 <Setter Property="IsEnabled" Value="False"/>
@@ -57,7 +57,7 @@
                             <Label Content="Оператор" Canvas.Left="10" Canvas.Top="41"/>
                             <ComboBox ItemsSource="{Binding Operators}" SelectedItem="{Binding ContractsEd_.Operator}" Canvas.Left="62" Canvas.Top="43" Width="114">
                                 <ComboBox.Style>
-                                    <Style TargetType="ComboBox">
+                                    <Style BasedOn="{StaticResource ComboBoxFlatStyle}" TargetType="ComboBox">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ContractsEd_}" Value="{x:Null}">
                                                 <Setter Property="IsEnabled" Value="False"/>
@@ -81,7 +81,7 @@
                             <Label Content="Дата" Canvas.Left="10" Canvas.Top="94"/>
                             <DatePicker SelectedDate="{Binding ContractsEd_.Date}" Canvas.Left="62" Canvas.Top="95" Width="114">
                                 <DatePicker.Style>
-                                    <Style TargetType="DatePicker">
+                                    <Style TargetType="DatePicker" BasedOn="{StaticResource DatePickerDefault}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ContractsEd_}" Value="{x:Null}">
                                                 <Setter Property="IsEnabled" Value="False"/>
@@ -92,7 +92,7 @@
                             </DatePicker>
                             <Button Command="{Binding CreateContractED}" Width="20" Height="18" Canvas.Top="72" Canvas.Left="159">
                                 <Button.Style>
-                                    <Style TargetType="{x:Type Button}">
+                                    <Style BasedOn="{StaticResource ButtonDefaultStyle}" TargetType="{x:Type Button}">
                                         <Style.Setters>
                                             <Setter Property="Content">
                                                 <Setter.Value>
@@ -119,7 +119,7 @@
                             <Label Content="Агент" Canvas.Left="10" Canvas.Top="10"/>
                             <ComboBox ItemsSource="{Binding ContractEdAgents}" SelectedItem="{Binding ContractsLd_.Agent}" Canvas.Left="62" Canvas.Top="12" Width="114">
                                 <ComboBox.Style>
-                                    <Style TargetType="ComboBox">
+                                    <Style TargetType="ComboBox" BasedOn="{StaticResource ComboBoxFlatStyle}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ContractsLd_}" Value="{x:Null}">
                                                 <Setter Property="IsEnabled" Value="False"/>
@@ -143,7 +143,7 @@
                             <Label Content="Дата" Canvas.Left="10" Canvas.Top="65"/>
                             <DatePicker SelectedDate="{Binding ContractsLd_.Date}" Canvas.Left="62" Canvas.Top="66" Width="114">
                                 <DatePicker.Style>
-                                    <Style TargetType="DatePicker">
+                                    <Style BasedOn="{StaticResource DatePickerDefault}" TargetType="DatePicker">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ContractsLd_}" Value="{x:Null}">
                                                 <Setter Property="IsEnabled" Value="False"/>
@@ -152,7 +152,7 @@
                                     </Style>
                                 </DatePicker.Style>
                             </DatePicker>
-                            <Button Command="{Binding CreateContractLD}" Width="20" Height="18" Canvas.Top="44" Canvas.Left="159" RenderTransformOrigin="0.275,1.034">
+                            <Button Command="{Binding CreateContractLD}"  Canvas.Top="43" Canvas.Left="159" RenderTransformOrigin="0.275,1.034">
                                 <Button.Style>
                                     <Style BasedOn="{StaticResource ButtonDefaultStyle}" TargetType="{x:Type Button}">
                                         <Style.Setters>
@@ -177,15 +177,15 @@
                         </Canvas>
                     </GroupBox>
                     <Label Content="Субдилер" Canvas.Left="10" Canvas.Top="225"/>
-                    <ComboBox ItemsSource="{Binding SubDillers}" SelectedItem="{Binding Organization_.SubDiller}" Canvas.Left="81" Canvas.Top="227" Width="168"/>
+                    <ComboBox ItemsSource="{Binding SubDillers}" SelectedItem="{Binding Organization_.SubDiller}" Style="{StaticResource ComboBoxFlatStyle}" Canvas.Left="81" Canvas.Top="227" Width="168"/>
                     <Label Content="Владелец лицензии" Canvas.Left="262" Canvas.Top="225"/>
                     <TextBox Text="{Binding Organization_.LicenseeLdidOrgNavigation.Alias, Mode=OneWay}" Width="150" Canvas.Left="385" Canvas.Top="229"/>
-                    <Button Command="{Binding LicenseeLDChangeCommand}" Canvas.Left="540" Canvas.Top="230">
+                    <Button Style="{StaticResource ButtonDefaultStyle}" Command="{Binding LicenseeLDChangeCommand}" Canvas.Left="540" Canvas.Top="230">
                         <Button.Content>
                             <fa:IconBlock Icon="AddressBook"/>
                         </Button.Content>
                     </Button>
-                    <Button Command="{Binding LicenseeLDEqualCommand}" Canvas.Left="560" Canvas.Top="230">
+                    <Button Style="{StaticResource ButtonDefaultStyle}" Command="{Binding LicenseeLDEqualCommand}" Canvas.Left="560" Canvas.Top="230">
                         <Button.Content>
                             <fa:IconBlock Icon="Equals" VerticalAlignment="Top"/>
                         </Button.Content>
